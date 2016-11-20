@@ -19,7 +19,7 @@ namespace DataStructures
             _elements = new T[_capacity];
         }
 
-        private int Length => _topElementIndex + 1;
+        public int Length => _topElementIndex + 1;
 
         public void Push(T element)
         {
