@@ -6,50 +6,44 @@ namespace DataStructures
     {
         private int _capacity;
         private T[] _elements;
-        private int _topElementIndex = -1;
+        private int _lastElementIndex = -1;
 
         public Stack()
         {
             _elements = new T[_capacity];
         }
 
-        public Stack(int capacity)
-        {
-            _capacity = capacity;
-            _elements = new T[_capacity];
-        }
-
-        public int Length => _topElementIndex + 1;
+        public int Count => _lastElementIndex + 1;
 
         public void Push(T element)
         {
-            if (_capacity >= Length)
+            if (_capacity >= Count)
             {
                 IncreaseSize();
             }
-            _topElementIndex++;
-            _elements[_topElementIndex] = element;
+            _lastElementIndex++;
+            _elements[_lastElementIndex] = element;
         }
 
         public T Pop()
         {
-            if (Length <= 0)
+            if (Count <= 0)
             {
                 throw new InvalidOperationException("Stack is empty");
             }
-            var lastInsertedElement = _elements[_topElementIndex];
-            _elements[_topElementIndex] = default(T);
-            _topElementIndex--;
+            var lastInsertedElement = _elements[_lastElementIndex];
+            _elements[_lastElementIndex] = default(T);
+            _lastElementIndex--;
             return lastInsertedElement;
         }
 
         public T Peek()
         {
-            if (Length <= 0)
+            if (Count <= 0)
             {
                 throw new InvalidOperationException("Stack is empty");
             }
-            return _elements[_topElementIndex];
+            return _elements[_lastElementIndex];
         }
 
         private void IncreaseSize()
@@ -57,7 +51,7 @@ namespace DataStructures
             _capacity += 1;
             _capacity *= 2;
             var newArray = new T[_capacity];
-            Array.Copy(_elements, newArray, Length);
+            Array.Copy(_elements, newArray, Count);
             _elements = newArray;
         }
     }

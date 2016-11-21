@@ -6,8 +6,9 @@ namespace DataStructures
     {
         private int _capacity;
         private T[] _elements;
-        private int _frontIndex;
-        private int _length;
+        private int _frontElementIndex;
+        private int _backElementIndex => (_frontElementIndex + _count) % _capacity;
+        private int _count;
 
         public Queue()
         {
@@ -20,38 +21,36 @@ namespace DataStructures
             _elements = new T[_capacity];
         }
 
-        private int _backIndex => (_frontIndex + _length)%_capacity;
-
         public void Enqueue(T element)
         {
-            if (_capacity == _length)
+            if (_capacity == _count)
             {
                 IncreaseSize();
             }
-            _elements[_backIndex] = element;
-            _length++;
+            _elements[_backElementIndex] = element;
+            _count++;
         }
 
         public T Dequeue()
         {
-            if (_length <= 0)
+            if (_count <= 0)
             {
                 throw new InvalidOperationException("Queue is Empty");
             }
-            var frontElement = _elements[_frontIndex];
-            _elements[_frontIndex] = default(T);
-            _length = _length--;
-            _frontIndex = (_frontIndex + 1)%_capacity;
+            var frontElement = _elements[_frontElementIndex];
+            _elements[_frontElementIndex] = default(T);
+            _count = _count--;
+            _frontElementIndex = (_frontElementIndex + 1)%_capacity;
             return frontElement;
         }
 
         public T Peek()
         {
-            if (_length <= 0)
+            if (_count <= 0)
             {
                 throw new InvalidOperationException("Queue is Empty");
             }
-            return _elements[_frontIndex];
+            return _elements[_frontElementIndex];
         }
 
         private void IncreaseSize()
@@ -59,13 +58,13 @@ namespace DataStructures
             _capacity += 1;
             _capacity *= 2;
             var temp = new Queue<T>(_capacity);
-            while (_length > 0)
+            while (_count > 0)
             {
                 temp.Enqueue(Dequeue());
             }
             _elements = temp._elements;
-            _length = temp._length;
-            _frontIndex = temp._frontIndex;
+            _count = temp._count;
+            _frontElementIndex = temp._frontElementIndex;
         }
     }
 }
