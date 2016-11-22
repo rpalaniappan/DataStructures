@@ -7,7 +7,7 @@ namespace DataStructures
         private int _capacity;
         private T[] _elements;
         private int _frontElementIndex;
-        private int _backElementIndex => (_frontElementIndex + _count) % _capacity;
+        private int _backElementIndex => (_frontElementIndex + _count)%_capacity;
         private int _count;
 
         public Queue()
