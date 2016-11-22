@@ -78,5 +78,33 @@
             current.Next = null;
             Count--;
         }
+
+        public void DeleteAtPosition(int position)
+        {
+            if(position<1)
+                return;
+            if(position==1)
+                DeleteAtBeginning();
+            if(position==Count)
+                DeleteAtEnd();
+            var current = Head;
+            if(current==null)
+                return;
+            int index = 1;
+            while (current.Next!=null)
+            {
+                index++;
+                if (index == position)
+                {
+                    //Delete here
+                    current.Next = current.Next.Next;
+                    return;
+                }
+                if (index>position)
+                    return;
+                current = current.Next;
+            }
+            
+        }
     }
 }
