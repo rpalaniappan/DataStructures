@@ -39,7 +39,7 @@ namespace DataStructures
             }
             var frontElement = _elements[_frontElementIndex];
             _elements[_frontElementIndex] = default(T);
-            _count = _count--;
+            _count--;
             _frontElementIndex = (_frontElementIndex + 1)%_capacity;
             return frontElement;
         }
